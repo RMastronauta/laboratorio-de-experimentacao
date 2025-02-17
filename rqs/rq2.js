@@ -1,7 +1,7 @@
 import { fetchAllRepositories } from './repositories.js';
 const { request, gql } = await import('graphql-request'); 
 
-const gitAuthToken = process.env.GIT_AUTH_TOKEN;
+const gitAuthToken = "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";
 const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
 
 const getAcceptedPullRequests = async (repoOwner, repoName) => {
@@ -42,15 +42,11 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
                 cursor: cursor  
             };
 
-            const response = await request({
-                url: GIT_GRAPHQL_URL,
-                document: query,
-                variables,
-                requestHeaders: {
-                    Authorization: `Bearer ${gitAuthToken}`,
-                    "User-Agent": "GraphQL-Client"
-                }
+            const response = await request(GIT_GRAPHQL_URL, query, variables, {
+                Authorization: `Bearer ${gitAuthToken}`,
+                "User-Agent": "GraphQL-Client"
             });
+            
 
             const prData = response.repository.pullRequests;
 
@@ -68,25 +64,22 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
     }
 };
 
-const prAcceptedNumberCriteria = 1000;
+const prAcceptedNumberCriteria = 100;
 
 async function getResponse() {
     const arrayRepositories = await fetchAllRepositories();
-    let numberOfReposThatHasMoreThan1000Prs = 0;
 
-    for (const repo of arrayRepositories) {
-        let ownerName = repo.owner.login;
-        let repositoryName = repo.name;
+    const results = await Promise.all(arrayRepositories.map(async (repo) => {
+        const accepted = await getAcceptedPullRequests(repo.owner.login, repo.name);
+        return accepted >= prAcceptedNumberCriteria ? 1 : 0;
+    }));
 
-        let accepted = await getAcceptedPullRequests(ownerName, repositoryName);
-        if (accepted >= prAcceptedNumberCriteria) {
-            numberOfReposThatHasMoreThan1000Prs++;
-        }
-    }
-
+    const numberOfReposThatHasMoreThan100Prs = results.reduce((acc, val) => acc + val, 0);
     const totalRepositories = arrayRepositories.length;
-    return (numberOfReposThatHasMoreThan1000Prs / totalRepositories) * 100;
+
+    return (numberOfReposThatHasMoreThan100Prs / totalRepositories) * 100;
 }
+
 
 export {
     getResponse

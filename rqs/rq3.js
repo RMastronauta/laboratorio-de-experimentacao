@@ -1,9 +1,9 @@
 import { fetchAllRepositories } from './repositories.js';
 const { request, gql } = await import('graphql-request');  // Importação dinâmica
 
-const gitAuthToken = process.env.GIT_AUTH_TOKEN;
+const gitAuthToken = "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";
 const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
-const consideredReleasesNumber = 2;
+const consideredReleasesNumber = 10;
 
 const getReleasesCount = async (repoOwner, repoName) => {
     try {
@@ -34,15 +34,11 @@ const getReleasesCount = async (repoOwner, repoName) => {
                 cursor: cursor,
             };
 
-            const response = await request({
-                url: GIT_GRAPHQL_URL,
-                document: query,
-                variables,
-                requestHeaders: {
-                    Authorization: `Bearer ${gitAuthToken}`,
-                    "User-Agent": "GraphQL-Client",
-                }
+            const response = await request(GIT_GRAPHQL_URL, query, variables, {
+                Authorization: `Bearer ${gitAuthToken}`,
+                "User-Agent": "GraphQL-Client",
             });
+            
 
             const releasesData = response.repository.refs;
             totalReleases += releasesData.totalCount;
@@ -61,22 +57,18 @@ const getReleasesCount = async (repoOwner, repoName) => {
 
 async function getPercentReleases() {
     const arrayRepositories = await fetchAllRepositories();
-    let numberOfReposWithMoreThan100Releases = 0;
 
-    for (const repo of arrayRepositories) {
-        let ownerName = repo.owner.login;
-        let repositoryName = repo.name;
+    const results = await Promise.all(arrayRepositories.map(async (repo) => {
+        const releasesCount = await getReleasesCount(repo.owner.login, repo.name);
+        return releasesCount > consideredReleasesNumber ? 1 : 0;
+    }));
 
-        let releasesCount = await getReleasesCount(ownerName, repositoryName);
-        
-        if (releasesCount > consideredReleasesNumber) {
-            numberOfReposWithMoreThan100Releases++;
-        }
-    }
-
+    const numberOfReposWithMoreThan100Releases = results.reduce((acc, val) => acc + val, 0);
     const totalRepositories = arrayRepositories.length;
+
     return (numberOfReposWithMoreThan100Releases / totalRepositories) * 100;
 }
+
 
 export {
     getPercentReleases

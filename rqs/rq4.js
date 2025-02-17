@@ -16,7 +16,7 @@ async function getTempoMedioAtualizacaoRepositories() {
     if (arrayRepositories.length === 0) return 0; // Evita divisão por zero
 
     let oldPercentRepos = (totalOldRepositories / arrayRepositories.length) * 100;
-    return oldPercentRepos; // Arredondando para 2 casas decimais
+    return oldPercentRepos; 
 }
 
 export { getTempoMedioAtualizacaoRepositories };

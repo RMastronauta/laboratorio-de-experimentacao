@@ -1,7 +1,7 @@
 import { fetchAllRepositories } from './repositories.js';
 import { request, gql } from 'graphql-request';
 
-const gitAuthToken = process.env.GIT_AUTH_TOKEN;
+const gitAuthToken = "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";
 const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
 
 const GET_CLOSED_ISSUES_COUNT = gql`
@@ -16,51 +16,15 @@ const GET_CLOSED_ISSUES_COUNT = gql`
 
 const getClosedIssuesCount = async (repoOwner, repoName) => {
     try {
-        let totalReleases = 0;
-        let cursor = null;
-        const perPage = 100;
-        const maxPages = 10;
-        
-        for (let page = 0; page < maxPages; page++) {
-            const query = gql`
-                query($owner: String!, $repo: String!, $perPage: Int!, $cursor: String) {
-                    repository(owner: $owner, name: $repo) {
-                        issues(first: $perPage, after: $cursor) {
-                            totalCount
-                            pageInfo {
-                                hasNextPage
-                                endCursor
-                            }
-                        }
-                    }
-                }
-            `;
+        const response = await request(GIT_GRAPHQL_URL, GET_CLOSED_ISSUES_COUNT, {
+            owner: repoOwner,
+            repo: repoName
+        }, {
+            Authorization: `Bearer ${gitAuthToken}`,
+            "User-Agent": "GraphQL-Client"
+        });
 
-            const variables = {
-                owner: repoOwner,
-                repo: repoName,
-                perPage: perPage,
-                cursor: cursor,
-            };
-
-            const response = await request({
-                url: GIT_GRAPHQL_URL,
-                document: query,
-                variables,
-                requestHeaders: {
-                    Authorization: `Bearer ${gitAuthToken}`,
-                    "User-Agent": "GraphQL-Client",
-                }
-            });
-
-            const releasesData = response.repository.issues;
-            totalReleases += releasesData.totalCount;
-
-            cursor = releasesData.pageInfo.endCursor;
-
-            if (!releasesData.pageInfo.hasNextPage) break;
-        }
-        return totalReleases;
+        return response.repository.issues.totalCount || 0;
     } catch (error) {
         console.error(`Erro ao buscar issues fechadas do repositório ${repoName}:`, error);
         return 0;
@@ -69,22 +33,23 @@ const getClosedIssuesCount = async (repoOwner, repoName) => {
 
 async function getPercentRepositoriesWithMoreThan30ClosedIssues() {
     const arrayRepositories = await fetchAllRepositories();
-    if (arrayRepositories.length === 0) {
-        return "Nenhum repositório encontrado.";
+    if (!arrayRepositories || arrayRepositories.length === 0) {
+        console.log("Nenhum repositório encontrado.");
+        return 0;
     }
 
-    let countRepositories = 0;
+    const results = await Promise.all(
+        arrayRepositories.map(async (repo) => {
+            const closedIssuesCount = await getClosedIssuesCount(repo.owner.login, repo.name);
+            return closedIssuesCount > 30 ? 1 : 0;
+        })
+    );
 
-    for (const repo of arrayRepositories) {
-        const closedIssuesCount = await getClosedIssuesCount(repo.owner.login, repo.name);
-        if (closedIssuesCount > 30) {
-            countRepositories++;
-        }
-    }
-
+    const countRepositories = results.reduce((acc, val) => acc + val, 0);
     const totalRepositories = arrayRepositories.length;
-    const percentage = ((countRepositories / totalRepositories) * 100);
 
+    const percentage = ((countRepositories / totalRepositories) * 100);
+    
     return percentage;
 }
 

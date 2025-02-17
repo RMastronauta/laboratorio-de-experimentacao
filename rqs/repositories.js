@@ -4,10 +4,10 @@ import { request, gql } from 'graphql-request';
 dotenv.config();
 
 const GIT_GRAPHQL_URL = 'https://api.github.com/graphql';
-const gitAuthToken = process.env.GIT_AUTH_TOKEN;
+const gitAuthToken = "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";
 
 const searchesNumber = 10;
-const sizePerPage = 10;
+const sizePerPage = 10; 
 const totalRepositories = searchesNumber * sizePerPage;
 
 let cachedRepositories = null;
@@ -50,9 +50,9 @@ const getRepositories = async (afterCursor) => {
             after: afterCursor,  
         };
 
-        const response = await  ({
+        const response = await request({
             url: GIT_GRAPHQL_URL,
-            document: GET_REPOSITORIES_QUERY,   
+            document: GET_REPOSITORIES_QUERY,
             variables,
             requestHeaders: {
                 Authorization: `Bearer ${gitAuthToken}`,
