@@ -7,7 +7,7 @@ const GIT_GRAPHQL_URL = 'https://api.github.com/graphql';
 const gitAuthToken = process.env.GIT_AUTH_TOKEN;
 
 const searchesNumber = 10;
-const sizePerPage = 1;
+const sizePerPage = 10;
 const totalRepositories = searchesNumber * sizePerPage;
 
 let cachedRepositories = null;
@@ -39,9 +39,9 @@ const getRepositories = async (afterCursor) => {
             after: afterCursor,  
         };
 
-        const response = await request({
+        const response = await  ({
             url: GIT_GRAPHQL_URL,
-            document: GET_REPOSITORIES_QUERY,
+            document: GET_REPOSITORIES_QUERY,   
             variables,
             requestHeaders: {
                 Authorization: `Bearer ${gitAuthToken}`,

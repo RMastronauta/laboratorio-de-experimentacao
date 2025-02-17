@@ -8,7 +8,7 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
     try {
         let totalMergedPRs = 0;
         let cursor = null;  
-        const perPage = 100; 
+        const perPage = 10; 
         const maxPages = 10;
 
         //pegando pelo status de MERGED pq na documentação oficial
