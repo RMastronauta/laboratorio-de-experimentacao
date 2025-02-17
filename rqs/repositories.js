@@ -13,17 +13,28 @@ const totalRepositories = searchesNumber * sizePerPage;
 let cachedRepositories = null;
 
 const GET_REPOSITORIES_QUERY = gql`
-    query($perPage: Int!, $after: String) {
-        search(query: "stars:>10000", type: REPOSITORY, first: $perPage, after: $after) {
-            edges {
-                node {
-                    ... on Repository {
+    query($perPage: Int!, $after: String) 
+    {
+        search(query: "stars:>10000", type: REPOSITORY, first: $perPage, after: $after) 
+        {
+            edges 
+            {
+                node 
+                {
+                    ... on Repository 
+                    {
                         name
-                        owner {
+                        owner 
+                        {
                             login
+                        }
+                        primaryLanguage 
+                        {
+                            name
                         }
                         stargazerCount
                         createdAt
+                        updatedAt
                     }
                 }
                 cursor
