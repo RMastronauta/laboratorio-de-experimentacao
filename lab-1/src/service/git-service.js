@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { request, gql } from "graphql-request";
+import { progressBarStep } from "../utils/progress-bar.utils.js";
 
 dotenv.config();
 
@@ -67,14 +68,16 @@ const getRepositories = async (skip) => {
 const getRepositoriesQuantity = async (quantity) => {
   const listRepositories = [];
   let cursorAux = null;
+  console.log(`Carregando repositorios | ${quantity}`);
+
   while (listRepositories.length < quantity) {
+    progressBarStep(listRepositories.length, quantity);
     const missingAmount = quantity - listRepositories.length;
 
-    const result = await getRepositories(cursorAux);
     const { repositories, cursor } = await getRepositories(cursorAux);
     cursorAux = cursor;
 
-    if (repositories.length == 0) {
+    if (!repositories || repositories?.length == 0) {
       break;
     }
 
@@ -88,7 +91,10 @@ const getRepositoriesQuantity = async (quantity) => {
     listRepositories.push(...addRepositories);
   }
 
+  progressBarStep(listRepositories.length, quantity);
+  console.log(`Carregado todos repositorios | ${listRepositories.length}`);
+
   return listRepositories;
 };
 
-export { getRepositoriesQuantity };
+export { getRepositoriesQuantity, GIT_GRAPHQL_URL, GIT_AUTH_TOKEN };

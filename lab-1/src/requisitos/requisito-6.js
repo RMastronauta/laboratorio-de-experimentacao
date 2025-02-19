@@ -1,8 +1,5 @@
-import { fetchAllRepositories } from "./repositories.js";
+import { GIT_AUTH_TOKEN, GIT_GRAPHQL_URL } from "../service/git-service.js";
 import { request, gql } from "graphql-request";
-
-const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
-const gitAuthToken = process.env.GIT_TOKEN;
 
 const GET_CLOSED_ISSUES_COUNT = gql`
   query ($owner: String!, $repo: String!) {
@@ -24,7 +21,7 @@ const getClosedIssuesCount = async (repoOwner, repoName) => {
         repo: repoName,
       },
       {
-        Authorization: `Bearer ${gitAuthToken}`,
+        Authorization: `Bearer ${GIT_AUTH_TOKEN}`,
         "User-Agent": "GraphQL-Client",
       }
     );
@@ -39,8 +36,9 @@ const getClosedIssuesCount = async (repoOwner, repoName) => {
   }
 };
 
-async function getPercentRepositoriesWithMoreThan30ClosedIssues() {
-  const arrayRepositories = await fetchAllRepositories();
+async function getPercentRepositoriesWithMoreThan30ClosedIssues(
+  arrayRepositories
+) {
   if (!arrayRepositories || arrayRepositories.length === 0) {
     console.log("Nenhum repositório encontrado.");
     return 0;

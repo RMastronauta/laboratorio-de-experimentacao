@@ -1,8 +1,6 @@
-import { fetchAllRepositories } from "./repositories.js";
-const { request, gql } = await import("graphql-request");
+import { GIT_AUTH_TOKEN, GIT_GRAPHQL_URL } from "../service/git-service.js";
 
-const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
-const gitAuthToken = process.env.GIT_TOKEN;
+const { request, gql } = await import("graphql-request");
 
 const getAcceptedPullRequests = async (repoOwner, repoName) => {
   try {
@@ -53,7 +51,7 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
       };
 
       const response = await request(GIT_GRAPHQL_URL, query, variables, {
-        Authorization: `Bearer ${gitAuthToken}`,
+        Authorization: `Bearer ${GIT_AUTH_TOKEN}`,
         "User-Agent": "GraphQL-Client",
       });
 
@@ -75,9 +73,7 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
 
 const prAcceptedNumberCriteria = 100;
 
-async function getResponse() {
-  const arrayRepositories = await fetchAllRepositories();
-
+async function getResponseReq2(arrayRepositories) {
   const results = await Promise.all(
     arrayRepositories.map(async (repo) => {
       const accepted = await getAcceptedPullRequests(
@@ -92,9 +88,10 @@ async function getResponse() {
     (acc, val) => acc + val,
     0
   );
+
   const totalRepositories = arrayRepositories.length;
 
   return (numberOfReposThatHasMoreThan100Prs / totalRepositories) * 100;
 }
 
-export { getResponse };
+export { getResponseReq2 };

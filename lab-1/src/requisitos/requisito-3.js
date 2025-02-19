@@ -1,8 +1,4 @@
-import { fetchAllRepositories } from "./repositories.js";
 const { request, gql } = await import("graphql-request"); // Importação dinâmica
-
-const GIT_GRAPHQL_URL = "https://api.github.com/graphql";
-const gitAuthToken = process.env.GIT_TOKEN;
 
 const consideredReleasesNumber = 10;
 
@@ -60,9 +56,7 @@ const getReleasesCount = async (repoOwner, repoName) => {
   }
 };
 
-async function getPercentReleases() {
-  const arrayRepositories = await fetchAllRepositories();
-
+async function getPercentReleases(arrayRepositories) {
   const results = await Promise.all(
     arrayRepositories.map(async (repo) => {
       const releasesCount = await getReleasesCount(repo.owner.login, repo.name);
