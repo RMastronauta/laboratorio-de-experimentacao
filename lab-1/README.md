@@ -72,9 +72,9 @@ Este projeto tem como objetivo coletar e analisar dados dos **1.000 repositório
 ## 🚀 Como Executar  
 
 ### 1️⃣ Instale as dependências  
-
- - npm install
-
+```
+  npm install
+```
 
 ### 2️⃣ Configure o token de acesso  
 Crie um arquivo \`config.js\` na raiz do projeto e adicione:  
@@ -85,6 +85,6 @@ module.exports = {
 ```
 
 ### 3️⃣ Execute a coleta de dados  
-
- - node index.js
-
+```
+  node index.js
+```
