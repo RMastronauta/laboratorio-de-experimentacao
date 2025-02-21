@@ -1,0 +1,101 @@
+name|owner|language|stargazerCount|createdAt|amountPr|meetsReleaseCriteria
+linux|torvalds|C|188169|2011-09-04T22:48:12Z|10|false
+go|golang|Go|125982|2014-08-19T04:33:40Z|1|false
+linux|torvalds|C|188169|2011-09-04T22:48:12Z|10|false
+Microsoft-Activation-Scripts|massgravel|Batchfile|120375|2020-01-12T23:03:34Z|6|false
+Microsoft-Activation-Scripts|massgravel|Batchfile|120375|2020-01-12T23:03:34Z|6|false
+go|golang|Go|125982|2014-08-19T04:33:40Z|1|false
+Python-100-Days|jackfrued|Jupyter Notebook|161068|2018-03-01T16:05:52Z|13|false
+Python-100-Days|jackfrued|Jupyter Notebook|161068|2018-03-01T16:05:52Z|13|false
+bootstrap|twbs|JavaScript|171538|2011-07-29T21:19:00Z|0|false
+ollama|ollama|Go|128362|2023-06-26T19:39:32Z|0|false
+AutoGPT|Significant-Gravitas|Python|171750|2023-03-16T09:21:07Z|0|false
+developer-roadmap|kamranahmedse|TypeScript|308827|2017-03-15T13:45:52Z|0|false
+developer-roadmap|kamranahmedse|TypeScript|308827|2017-03-15T13:45:52Z|0|false
+awesome-go|avelino|Go|138534|2014-07-06T13:42:15Z|0|false
+build-your-own-x|codecrafters-io|Markdown|338122|2018-05-09T12:03:18Z|0|false
+coding-interview-university|jwasham|não encontrado|312162|2016-06-06T02:34:12Z|0|false
+fucking-algorithm|labuladong|Markdown|126894|2020-02-19T09:01:23Z|0|false
+CS-Notes|CyC2018|não encontrado|178972|2018-02-13T14:56:24Z|0|false
+system-design-primer|donnemartin|Python|289825|2017-02-26T16:15:28Z|0|false
+vscode|microsoft|TypeScript|167618|2015-09-03T20:23:38Z|0|false
+gitignore|github|não encontrado|164537|2010-11-08T20:17:14Z|0|false
+ollama|ollama|Go|128362|2023-06-26T19:39:32Z|0|false
+javascript-algorithms|trekhleb|JavaScript|190179|2018-03-24T07:47:04Z|0|false
+30-seconds-of-code|Chalarangelo|JavaScript|122727|2017-11-29T17:35:03Z|0|false
+tech-interview-handbook|yangshun|TypeScript|121989|2016-07-05T05:00:48Z|0|false
+AutoGPT|Significant-Gravitas|Python|171750|2023-03-16T09:21:07Z|0|false
+freeCodeCamp|freeCodeCamp|TypeScript|410291|2014-12-24T17:49:19Z|0|false
+JavaGuide|Snailclimb|Java|148225|2018-05-07T13:27:00Z|0|false
+30-seconds-of-code|Chalarangelo|JavaScript|122727|2017-11-29T17:35:03Z|0|false
+scrcpy|Genymobile|C|117912|2017-11-21T18:00:27Z|0|false
+coding-interview-university|jwasham|não encontrado|312162|2016-06-06T02:34:12Z|0|false
+react|facebook|JavaScript|232481|2013-05-24T16:15:54Z|0|false
+project-based-learning|practical-tutorials|não encontrado|218417|2017-04-12T05:07:46Z|0|false
+awesome-chatgpt-prompts|f|HTML|120717|2022-12-05T13:54:13Z|0|false
+javascript|airbnb|JavaScript|146155|2012-11-01T23:13:50Z|0|false
+awesome-selfhosted|awesome-selfhosted|não encontrado|217508|2015-06-01T02:33:17Z|0|false
+free-programming-books-zh_CN|justjavac|não encontrado|112681|2013-11-04T01:59:19Z|0|false
+vue|vuejs|TypeScript|208400|2013-07-29T03:24:51Z|0|false
+javascript-algorithms|trekhleb|JavaScript|190179|2018-03-24T07:47:04Z|0|false
+the-book-of-secret-knowledge|trimstray|não encontrado|158702|2018-06-23T10:43:14Z|0|false
+awesome|sindresorhus|não encontrado|348111|2014-07-11T13:42:37Z|0|false
+electron|electron|C++|115548|2013-04-12T01:47:36Z|0|false
+next.js|vercel|JavaScript|129559|2016-10-05T23:32:51Z|0|false
+tensorflow|tensorflow|C++|188166|2015-11-07T01:19:20Z|0|false
+next.js|vercel|JavaScript|129559|2016-10-05T23:32:51Z|0|false
+free-programming-books|EbookFoundation|HTML|350870|2013-10-11T06:50:37Z|0|false
+bootstrap|twbs|JavaScript|171538|2011-07-29T21:19:00Z|0|false
+996.ICU|996icu|não encontrado|270277|2019-03-26T07:31:14Z|0|false
+scrcpy|Genymobile|C|117912|2017-11-21T18:00:27Z|0|false
+public-apis|public-apis|Python|328095|2016-03-20T23:49:42Z|0|false
+stable-diffusion-webui|AUTOMATIC1111|Python|148166|2022-08-22T14:05:26Z|0|false
+system-design-primer|donnemartin|Python|289825|2017-02-26T16:15:28Z|0|false
+javascript|airbnb|JavaScript|146155|2012-11-01T23:13:50Z|0|false
+transformers|huggingface|Python|139911|2018-10-29T13:56:00Z|0|false
+awesome-python|vinta|Python|234771|2014-06-27T21:00:06Z|0|false
+awesome-selfhosted|awesome-selfhosted|não encontrado|217508|2015-06-01T02:33:17Z|0|false
+the-art-of-command-line|jlevy|não encontrado|154781|2015-05-20T15:11:03Z|0|false
+the-art-of-command-line|jlevy|não encontrado|154781|2015-05-20T15:11:03Z|0|false
+kubernetes|kubernetes|Go|113242|2014-06-06T22:56:04Z|0|false
+996.ICU|996icu|não encontrado|270277|2019-03-26T07:31:14Z|0|false
+stable-diffusion-webui|AUTOMATIC1111|Python|148166|2022-08-22T14:05:26Z|0|false
+awesome-go|avelino|Go|138534|2014-07-06T13:42:15Z|0|false
+JavaGuide|Snailclimb|Java|148225|2018-05-07T13:27:00Z|0|false
+computer-science|ossu|não encontrado|175557|2014-05-04T00:18:39Z|0|false
+build-your-own-x|codecrafters-io|Markdown|338122|2018-05-09T12:03:18Z|0|false
+free-programming-books|EbookFoundation|HTML|350870|2013-10-11T06:50:37Z|0|false
+Python|TheAlgorithms|Python|197505|2016-07-16T09:44:01Z|0|false
+Python|TheAlgorithms|Python|197505|2016-07-16T09:44:01Z|0|false
+free-programming-books-zh_CN|justjavac|não encontrado|112681|2013-11-04T01:59:19Z|0|false
+the-book-of-secret-knowledge|trimstray|não encontrado|158702|2018-06-23T10:43:14Z|0|false
+freeCodeCamp|freeCodeCamp|TypeScript|410291|2014-12-24T17:49:19Z|0|false
+react-native|facebook|C++|120674|2015-01-09T18:10:16Z|0|false
+project-based-learning|practical-tutorials|não encontrado|218417|2017-04-12T05:07:46Z|0|false
+tensorflow|tensorflow|C++|188166|2015-11-07T01:19:20Z|0|false
+awesome-chatgpt-prompts|f|HTML|120717|2022-12-05T13:54:13Z|0|false
+vue|vuejs|TypeScript|208400|2013-07-29T03:24:51Z|0|false
+flutter|flutter|Dart|168763|2015-03-06T22:54:58Z|0|false
+gitignore|github|não encontrado|164537|2010-11-08T20:17:14Z|0|false
+You-Dont-Know-JS|getify|não encontrado|181079|2013-11-16T02:37:24Z|0|false
+CS-Notes|CyC2018|não encontrado|178972|2018-02-13T14:56:24Z|0|false
+electron|electron|C++|115548|2013-04-12T01:47:36Z|0|false
+fucking-algorithm|labuladong|Markdown|126894|2020-02-19T09:01:23Z|0|false
+youtube-dl|ytdl-org|Python|134309|2010-10-31T14:35:07Z|0|false
+awesome-python|vinta|Python|234771|2014-06-27T21:00:06Z|0|false
+transformers|huggingface|Python|139911|2018-10-29T13:56:00Z|0|false
+PowerToys|microsoft|C#|114985|2019-05-01T17:44:02Z|0|false
+awesome|sindresorhus|não encontrado|348111|2014-07-11T13:42:37Z|0|false
+You-Dont-Know-JS|getify|não encontrado|181079|2013-11-16T02:37:24Z|0|false
+ohmyzsh|ohmyzsh|Shell|176229|2009-08-28T18:15:37Z|0|false
+public-apis|public-apis|Python|328095|2016-03-20T23:49:42Z|0|false
+PowerToys|microsoft|C#|114985|2019-05-01T17:44:02Z|0|false
+flutter|flutter|Dart|168763|2015-03-06T22:54:58Z|0|false
+tech-interview-handbook|yangshun|TypeScript|121989|2016-07-05T05:00:48Z|0|false
+react|facebook|JavaScript|232481|2013-05-24T16:15:54Z|0|false
+youtube-dl|ytdl-org|Python|134309|2010-10-31T14:35:07Z|0|false
+computer-science|ossu|não encontrado|175557|2014-05-04T00:18:39Z|0|false
+ohmyzsh|ohmyzsh|Shell|176229|2009-08-28T18:15:37Z|0|false
+vscode|microsoft|TypeScript|167618|2015-09-03T20:23:38Z|0|false
+kubernetes|kubernetes|Go|113242|2014-06-06T22:56:04Z|0|false
+react-native|facebook|C++|120674|2015-01-09T18:10:16Z|0|false

@@ -1,3 +1,5 @@
+import { GIT_AUTH_TOKEN, GIT_GRAPHQL_URL } from "../service/git-service.js";
+
 const { request, gql } = await import("graphql-request"); // Importação dinâmica
 
 const consideredReleasesNumber = 10;
@@ -37,7 +39,7 @@ const getReleasesCount = async (repoOwner, repoName) => {
       };
 
       const response = await request(GIT_GRAPHQL_URL, query, variables, {
-        Authorization: `Bearer ${gitAuthToken}`,
+        Authorization: `Bearer ${GIT_AUTH_TOKEN}`,
         "User-Agent": "GraphQL-Client",
       });
 
@@ -57,12 +59,27 @@ const getReleasesCount = async (repoOwner, repoName) => {
 };
 
 async function getPercentReleases(arrayRepositories) {
+  const resultRepPercentCsv = [];
   const results = await Promise.all(
     arrayRepositories.map(async (repo) => {
       const releasesCount = await getReleasesCount(repo.owner.login, repo.name);
+
+      resultRepPercentCsv.push({
+        name: repo.name,
+        owner: repo.owner.login,
+        language: repo?.primaryLanguage?.name || "não encontrado",
+        stargazerCount: repo.stargazerCount,
+        createdAt: repo.createdAt,
+        amountReleases: releasesCount,
+        meetsReleaseCriteria:
+          releasesCount > consideredReleasesNumber ? "true" : "false",
+      });
+
       return releasesCount > consideredReleasesNumber ? 1 : 0;
     })
   );
+
+  saveCsv(resultRepPrCsv);
 
   const numberOfReposWithMoreThan100Releases = results.reduce(
     (acc, val) => acc + val,
@@ -72,5 +89,9 @@ async function getPercentReleases(arrayRepositories) {
 
   return (numberOfReposWithMoreThan100Releases / totalRepositories) * 100;
 }
+
+const saveCsv = (data) => {
+  createCsv(data, "csv/requisito-2.csv");
+};
 
 export { getPercentReleases };

@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { request, gql } from "graphql-request";
-import { progressBarStep } from "../utils/progress-bar.utils.js";
+import { progressBarStep } from "../utils/progress-bar.util.js";
 
 dotenv.config();
 

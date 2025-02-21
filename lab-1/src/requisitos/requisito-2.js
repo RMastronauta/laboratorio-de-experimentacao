@@ -1,4 +1,5 @@
 import { GIT_AUTH_TOKEN, GIT_GRAPHQL_URL } from "../service/git-service.js";
+import { createCsv } from "../utils/create-csv.util.js";
 
 const { request, gql } = await import("graphql-request");
 
@@ -74,15 +75,30 @@ const getAcceptedPullRequests = async (repoOwner, repoName) => {
 const prAcceptedNumberCriteria = 100;
 
 async function getResponseReq2(arrayRepositories) {
+  const resultRepPrCsv = [];
   const results = await Promise.all(
     arrayRepositories.map(async (repo) => {
       const accepted = await getAcceptedPullRequests(
         repo.owner.login,
         repo.name
       );
+
+      resultRepPrCsv.push({
+        name: repo.name,
+        owner: repo.owner.login,
+        language: repo?.primaryLanguage?.name || "não encontrado",
+        stargazerCount: repo.stargazerCount,
+        createdAt: repo.createdAt,
+        amountPr: accepted,
+        meetsReleaseCriteria:
+          accepted >= prAcceptedNumberCriteria ? "true" : "false",
+      });
+
       return accepted >= prAcceptedNumberCriteria ? 1 : 0;
     })
   );
+
+  saveCsv(resultRepPrCsv);
 
   const numberOfReposThatHasMoreThan100Prs = results.reduce(
     (acc, val) => acc + val,
@@ -93,5 +109,9 @@ async function getResponseReq2(arrayRepositories) {
 
   return (numberOfReposThatHasMoreThan100Prs / totalRepositories) * 100;
 }
+
+const saveCsv = (data) => {
+  createCsv(data, "csv/requisito-2.csv");
+};
 
 export { getResponseReq2 };
