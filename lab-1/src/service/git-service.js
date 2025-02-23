@@ -6,7 +6,7 @@ dotenv.config();
 
 const GIT_GRAPHQL_URL = process.env.GIT_BASE_URL;
 const GIT_AUTH_TOKEN = process.env.GIT_AUTH_TOKEN;
-const QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 10;
+const QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 100;
 
 const getRepositories = async (skip) => {
   try {
