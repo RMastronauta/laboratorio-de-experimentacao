@@ -9,10 +9,10 @@ import { createCsv } from "./utils/create-csv.util.js";
 
 const start = async () => {
   const listRepositories = await getRepositoriesQuantity(100);
-  await req1(listRepositories);
-  await req2(listRepositories);
-  await req3(listRepositories);
-  await req4(listRepositories);
+  // await req1(listRepositories);
+  // await req2(listRepositories);
+  // await req3(listRepositories);
+  // await req4(listRepositories);
   await req5(listRepositories);
   await req6(listRepositories);
 };
@@ -58,18 +58,19 @@ const req4 = async (listRepositories) => {
 };
 
 const req5 = async (listRepositories) => {
-  const result = getRepositoriosPossuemLinguagemPopular(listRepositories);
+  const result = await getRepositoriosPossuemLinguagemPopular(listRepositories);
 
   console.log(
-    `% de repositorios populares que possuem linguagem popular: ${result.toFixed(
-      2
-    )}% `
+    `% de repositorios populares que possuem linguagem popular: ${
+      result?.toFixed(2) || 0
+    }% `
   );
 };
 
 const req6 = async (listRepositories) => {
-  const result =
-    getPercentRepositoriesWithMoreThan30ClosedIssues(listRepositories);
+  const result = await getPercentRepositoriesWithMoreThan30ClosedIssues(
+    listRepositories
+  );
 
   console.log(
     `% de repositorios populares com mais de 30 issues fechadas: ${result.toFixed(

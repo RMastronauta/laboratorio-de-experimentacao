@@ -1,4 +1,5 @@
 import { GIT_AUTH_TOKEN, GIT_GRAPHQL_URL } from "../service/git-service.js";
+import { createCsv } from "../utils/create-csv.util.js";
 
 const { request, gql } = await import("graphql-request"); // Importação dinâmica
 
@@ -59,12 +60,12 @@ const getReleasesCount = async (repoOwner, repoName) => {
 };
 
 async function getPercentReleases(arrayRepositories) {
-  const resultRepPercentCsv = [];
+  const resultRepPrCsv = [];
   const results = await Promise.all(
     arrayRepositories.map(async (repo) => {
       const releasesCount = await getReleasesCount(repo.owner.login, repo.name);
 
-      resultRepPercentCsv.push({
+      resultRepPrCsv.push({
         name: repo.name,
         owner: repo.owner.login,
         language: repo?.primaryLanguage?.name || "não encontrado",
@@ -91,7 +92,7 @@ async function getPercentReleases(arrayRepositories) {
 }
 
 const saveCsv = (data) => {
-  createCsv(data, "csv/requisito-2.csv");
+  createCsv(data, "csv/requisito-3.csv");
 };
 
 export { getPercentReleases };
