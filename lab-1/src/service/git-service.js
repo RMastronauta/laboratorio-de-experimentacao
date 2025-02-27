@@ -86,7 +86,7 @@ const getRepositoriesQuantity = async (quantity) => {
   console.log(`Carregando repositorios | ${quantity}`);
 
   while (listRepositories.length < quantity) {
-    // progressBarStep(listRepositories.length, quantity);
+    progressBarStep(listRepositories.length, quantity);
     const missingAmount = quantity - listRepositories.length;
 
     const { repositories, cursor } = await getRepositories(cursorAux);
@@ -96,20 +96,13 @@ const getRepositoriesQuantity = async (quantity) => {
       break;
     }
 
-    if (missingAmount > listRepositories.length) {
-      listRepositories.push(...repositories);
-      continue;
-    }
-
-    const addRepositories = listRepositories.slice(0, missingAmount);
+    const addRepositories = repositories.slice(0, missingAmount);
 
     listRepositories.push(...addRepositories);
   }
 
-  console.log(listRepositories);
-
   progressBarStep(listRepositories.length, quantity);
-  console.log(`Carregado todos repositorios | ${listRepositories.length}`);
+  console.log(`\nCarregado todos repositorios | ${listRepositories.length}`);
 
   return listRepositories;
 };
