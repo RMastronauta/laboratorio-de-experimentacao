@@ -8,12 +8,12 @@ import { getRepositoriesQuantity } from "./service/git-service.js";
 import { createCsv } from "./utils/create-csv.util.js";
 
 const start = async () => {
-  const listRepositories = await getRepositoriesQuantity(1000);
-  // await req1(listRepositories);
-  // await req2(listRepositories);
-  // await req3(listRepositories);
-  // await req4(listRepositories);
-  // await req5(listRepositories);
+  const listRepositories = await getRepositoriesQuantity(100);
+  await req1(listRepositories);
+  await req2(listRepositories);
+  await req3(listRepositories);
+  await req4(listRepositories);
+  await req5(listRepositories);
   await req6(listRepositories);
 };
 
@@ -31,7 +31,7 @@ const req2 = async (listRepositories) => {
   const result = await getResponseReq2(listRepositories);
 
   console.log(
-    `% de repositórios populares que receberam mais de 100 contribuições: ${result.toFixed(
+    `% de repositórios que tem mais de 70% de pull requests aceitas(mergeadas): ${result.toFixed(
       2
     )}%`
   );
