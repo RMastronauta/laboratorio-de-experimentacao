@@ -1,5 +1,6 @@
 import { isAfter, addYears, differenceInYears } from "date-fns";
 import { createCsv } from "../utils/create-csv.util.js";
+import { createChart } from "../utils/create-chart.util.js";
 
 const consideredAgeYear = 5;
 
@@ -10,18 +11,55 @@ const isRepositoryOld = (repository) => {
   return isAfter(yearLimit, repositoryCreatedAt);
 };
 
-function getPercentOldRepositories(listRepositories) {
+async function getPercentOldRepositories(listRepositories) {
   const listRepositoriesOld = listRepositories.filter(isRepositoryOld);
-  const listRepositoriesNew = listRepositories.filter(
-    (req) => !isRepositoryOld(req)
-  );
   const totalOldRepositories = listRepositoriesOld.length;
   const oldPercentRepos =
     (totalOldRepositories / listRepositories.length) * 100;
 
+  await saveChart(listRepositoriesOld);
   saveCsv(listRepositories);
 
   return oldPercentRepos;
+}
+
+async function saveChart(listRepositories) {
+  const countByYear = listRepositories.reduce((acc, repo) => {
+    const year = new Date(repo.createdAt).getFullYear();
+    acc[year] = (acc[year] || 0) + 1;
+    return acc;
+  }, {});
+
+  const config = {
+    type: "bar",
+    data: {
+      labels: Object.keys(countByYear),
+      datasets: [
+        {
+          label: "Repositorios",
+          data: Object.values(countByYear),
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Repositórios com mais de 5 anos",
+      },
+      plugins: {
+        datalabels: {
+          align: "center",
+          formatter: (value) => value,
+          color: "white",
+          font: {
+            weight: "bold",
+          },
+        },
+      },
+    },
+  };
+
+  await createChart(config, "requisito-1");
 }
 
 function saveCsv(listRepositories) {

@@ -16,49 +16,48 @@ const getRepositories = async (skip) => {
     };
 
     const queryGetRepositories = gql`
-    query ($perPage: Int!, $after: String) {
-      search(
-        query: "stars:>10000"
-        type: REPOSITORY
-        first: $perPage
-        after: $after
-      ) {
-        edges {
-          node {
-            ... on Repository {
-              name
-              owner {
-                login
-              }
-              primaryLanguage {
+      query ($perPage: Int!, $after: String) {
+        search(
+          query: "stars:>10000"
+          type: REPOSITORY
+          first: $perPage
+          after: $after
+        ) {
+          edges {
+            node {
+              ... on Repository {
                 name
-              }
-              stargazerCount
-              createdAt
-              updatedAt
-              pullRequests {
-                totalCount
-              }
-              mergedPullRequests: pullRequests(states: MERGED) {
-                totalCount
-              }
-              issues {
-                totalCount
-              }
-              closedIssues: issues(states: [CLOSED]) {
-                totalCount
-              }
-              releases {
-                totalCount
+                owner {
+                  login
+                }
+                primaryLanguage {
+                  name
+                }
+                stargazerCount
+                createdAt
+                updatedAt
+                pullRequests {
+                  totalCount
+                }
+                mergedPullRequests: pullRequests(states: MERGED) {
+                  totalCount
+                }
+                issues {
+                  totalCount
+                }
+                closedIssues: issues(states: [CLOSED]) {
+                  totalCount
+                }
+                releases {
+                  totalCount
+                }
               }
             }
+            cursor
           }
-          cursor
         }
       }
-    }
-
-`;
+    `;
 
     const { search } = await request({
       url: GIT_GRAPHQL_URL,
@@ -87,7 +86,7 @@ const getRepositoriesQuantity = async (quantity) => {
   console.log(`Carregando repositorios | ${quantity}`);
 
   while (listRepositories.length < quantity) {
-    progressBarStep(listRepositories.length, quantity);
+    // progressBarStep(listRepositories.length, quantity);
     const missingAmount = quantity - listRepositories.length;
 
     const { repositories, cursor } = await getRepositories(cursorAux);
@@ -107,7 +106,7 @@ const getRepositoriesQuantity = async (quantity) => {
     listRepositories.push(...addRepositories);
   }
 
-  console.log(listRepositories)
+  console.log(listRepositories);
 
   progressBarStep(listRepositories.length, quantity);
   console.log(`Carregado todos repositorios | ${listRepositories.length}`);

@@ -1,101 +1,31 @@
 name|owner|language|stargazerCount|createdAt|amountYear|isOld
-freeCodeCamp|freeCodeCamp|TypeScript|410291|2014-12-24T17:49:19Z|-10|true
-free-programming-books|EbookFoundation|HTML|350870|2013-10-11T06:50:37Z|-11|true
-awesome|sindresorhus|não encontrado|348111|2014-07-11T13:42:37Z|-10|true
-build-your-own-x|codecrafters-io|Markdown|338122|2018-05-09T12:03:18Z|-6|true
-public-apis|public-apis|Python|328095|2016-03-20T23:49:42Z|-8|true
-coding-interview-university|jwasham|não encontrado|312162|2016-06-06T02:34:12Z|-8|true
-developer-roadmap|kamranahmedse|TypeScript|308827|2017-03-15T13:45:52Z|-7|true
-system-design-primer|donnemartin|Python|289825|2017-02-26T16:15:28Z|-7|true
-996.ICU|996icu|não encontrado|270277|2019-03-26T07:31:14Z|-5|true
-awesome-python|vinta|Python|234771|2014-06-27T21:00:06Z|-10|true
-react|facebook|JavaScript|232481|2013-05-24T16:15:54Z|-11|true
-project-based-learning|practical-tutorials|não encontrado|218417|2017-04-12T05:07:46Z|-7|true
-awesome-selfhosted|awesome-selfhosted|não encontrado|217508|2015-06-01T02:33:17Z|-9|true
-vue|vuejs|TypeScript|208400|2013-07-29T03:24:51Z|-11|true
-Python|TheAlgorithms|Python|197505|2016-07-16T09:44:01Z|-8|true
-javascript-algorithms|trekhleb|JavaScript|190179|2018-03-24T07:47:04Z|-6|true
-linux|torvalds|C|188169|2011-09-04T22:48:12Z|-13|true
-tensorflow|tensorflow|C++|188166|2015-11-07T01:19:20Z|-9|true
-You-Dont-Know-JS|getify|não encontrado|181079|2013-11-16T02:37:24Z|-11|true
-CS-Notes|CyC2018|não encontrado|178972|2018-02-13T14:56:24Z|-7|true
-ohmyzsh|ohmyzsh|Shell|176229|2009-08-28T18:15:37Z|-15|true
-computer-science|ossu|não encontrado|175557|2014-05-04T00:18:39Z|-10|true
-AutoGPT|Significant-Gravitas|Python|171750|2023-03-16T09:21:07Z|-1|false
-bootstrap|twbs|JavaScript|171538|2011-07-29T21:19:00Z|-13|true
-flutter|flutter|Dart|168763|2015-03-06T22:54:58Z|-9|true
-vscode|microsoft|TypeScript|167618|2015-09-03T20:23:38Z|-9|true
-gitignore|github|não encontrado|164537|2010-11-08T20:17:14Z|-14|true
-Python-100-Days|jackfrued|Jupyter Notebook|161068|2018-03-01T16:05:52Z|-6|true
-the-book-of-secret-knowledge|trimstray|não encontrado|158702|2018-06-23T10:43:14Z|-6|true
-the-art-of-command-line|jlevy|não encontrado|154781|2015-05-20T15:11:03Z|-9|true
-JavaGuide|Snailclimb|Java|148225|2018-05-07T13:27:00Z|-6|true
-stable-diffusion-webui|AUTOMATIC1111|Python|148166|2022-08-22T14:05:26Z|-2|false
-javascript|airbnb|JavaScript|146155|2012-11-01T23:13:50Z|-12|true
-transformers|huggingface|Python|139911|2018-10-29T13:56:00Z|-6|true
-awesome-go|avelino|Go|138534|2014-07-06T13:42:15Z|-10|true
-youtube-dl|ytdl-org|Python|134309|2010-10-31T14:35:07Z|-14|true
-next.js|vercel|JavaScript|129559|2016-10-05T23:32:51Z|-8|true
-ollama|ollama|Go|128362|2023-06-26T19:39:32Z|-1|false
-fucking-algorithm|labuladong|Markdown|126894|2020-02-19T09:01:23Z|-5|true
-go|golang|Go|125982|2014-08-19T04:33:40Z|-10|true
-30-seconds-of-code|Chalarangelo|JavaScript|122727|2017-11-29T17:35:03Z|-7|true
-tech-interview-handbook|yangshun|TypeScript|121989|2016-07-05T05:00:48Z|-8|true
-awesome-chatgpt-prompts|f|HTML|120717|2022-12-05T13:54:13Z|-2|false
-react-native|facebook|C++|120674|2015-01-09T18:10:16Z|-10|true
-Microsoft-Activation-Scripts|massgravel|Batchfile|120375|2020-01-12T23:03:34Z|-5|true
-scrcpy|Genymobile|C|117912|2017-11-21T18:00:27Z|-7|true
-electron|electron|C++|115548|2013-04-12T01:47:36Z|-11|true
-PowerToys|microsoft|C#|114985|2019-05-01T17:44:02Z|-5|true
-kubernetes|kubernetes|Go|113242|2014-06-06T22:56:04Z|-10|true
-free-programming-books-zh_CN|justjavac|não encontrado|112681|2013-11-04T01:59:19Z|-11|true
-freeCodeCamp|freeCodeCamp|TypeScript|410291|2014-12-24T17:49:19Z|-10|true
-free-programming-books|EbookFoundation|HTML|350870|2013-10-11T06:50:37Z|-11|true
-awesome|sindresorhus|não encontrado|348111|2014-07-11T13:42:37Z|-10|true
-build-your-own-x|codecrafters-io|Markdown|338122|2018-05-09T12:03:18Z|-6|true
-public-apis|public-apis|Python|328095|2016-03-20T23:49:42Z|-8|true
-coding-interview-university|jwasham|não encontrado|312162|2016-06-06T02:34:12Z|-8|true
-developer-roadmap|kamranahmedse|TypeScript|308827|2017-03-15T13:45:52Z|-7|true
-system-design-primer|donnemartin|Python|289825|2017-02-26T16:15:28Z|-7|true
-996.ICU|996icu|não encontrado|270277|2019-03-26T07:31:14Z|-5|true
-awesome-python|vinta|Python|234771|2014-06-27T21:00:06Z|-10|true
-react|facebook|JavaScript|232481|2013-05-24T16:15:54Z|-11|true
-project-based-learning|practical-tutorials|não encontrado|218417|2017-04-12T05:07:46Z|-7|true
-awesome-selfhosted|awesome-selfhosted|não encontrado|217508|2015-06-01T02:33:17Z|-9|true
-vue|vuejs|TypeScript|208400|2013-07-29T03:24:51Z|-11|true
-Python|TheAlgorithms|Python|197505|2016-07-16T09:44:01Z|-8|true
-javascript-algorithms|trekhleb|JavaScript|190179|2018-03-24T07:47:04Z|-6|true
-linux|torvalds|C|188169|2011-09-04T22:48:12Z|-13|true
-tensorflow|tensorflow|C++|188166|2015-11-07T01:19:20Z|-9|true
-You-Dont-Know-JS|getify|não encontrado|181079|2013-11-16T02:37:24Z|-11|true
-CS-Notes|CyC2018|não encontrado|178972|2018-02-13T14:56:24Z|-7|true
-ohmyzsh|ohmyzsh|Shell|176229|2009-08-28T18:15:37Z|-15|true
-computer-science|ossu|não encontrado|175557|2014-05-04T00:18:39Z|-10|true
-AutoGPT|Significant-Gravitas|Python|171750|2023-03-16T09:21:07Z|-1|false
-bootstrap|twbs|JavaScript|171538|2011-07-29T21:19:00Z|-13|true
-flutter|flutter|Dart|168763|2015-03-06T22:54:58Z|-9|true
-vscode|microsoft|TypeScript|167618|2015-09-03T20:23:38Z|-9|true
-gitignore|github|não encontrado|164537|2010-11-08T20:17:14Z|-14|true
-Python-100-Days|jackfrued|Jupyter Notebook|161068|2018-03-01T16:05:52Z|-6|true
-the-book-of-secret-knowledge|trimstray|não encontrado|158702|2018-06-23T10:43:14Z|-6|true
-the-art-of-command-line|jlevy|não encontrado|154781|2015-05-20T15:11:03Z|-9|true
-JavaGuide|Snailclimb|Java|148225|2018-05-07T13:27:00Z|-6|true
-stable-diffusion-webui|AUTOMATIC1111|Python|148166|2022-08-22T14:05:26Z|-2|false
-javascript|airbnb|JavaScript|146155|2012-11-01T23:13:50Z|-12|true
-transformers|huggingface|Python|139911|2018-10-29T13:56:00Z|-6|true
-awesome-go|avelino|Go|138534|2014-07-06T13:42:15Z|-10|true
-youtube-dl|ytdl-org|Python|134309|2010-10-31T14:35:07Z|-14|true
-next.js|vercel|JavaScript|129559|2016-10-05T23:32:51Z|-8|true
-ollama|ollama|Go|128362|2023-06-26T19:39:32Z|-1|false
-fucking-algorithm|labuladong|Markdown|126894|2020-02-19T09:01:23Z|-5|true
-go|golang|Go|125982|2014-08-19T04:33:40Z|-10|true
-30-seconds-of-code|Chalarangelo|JavaScript|122727|2017-11-29T17:35:03Z|-7|true
-tech-interview-handbook|yangshun|TypeScript|121989|2016-07-05T05:00:48Z|-8|true
-awesome-chatgpt-prompts|f|HTML|120717|2022-12-05T13:54:13Z|-2|false
-react-native|facebook|C++|120674|2015-01-09T18:10:16Z|-10|true
-Microsoft-Activation-Scripts|massgravel|Batchfile|120375|2020-01-12T23:03:34Z|-5|true
-scrcpy|Genymobile|C|117912|2017-11-21T18:00:27Z|-7|true
-electron|electron|C++|115548|2013-04-12T01:47:36Z|-11|true
-PowerToys|microsoft|C#|114985|2019-05-01T17:44:02Z|-5|true
-kubernetes|kubernetes|Go|113242|2014-06-06T22:56:04Z|-10|true
-free-programming-books-zh_CN|justjavac|não encontrado|112681|2013-11-04T01:59:19Z|-11|true
+freeCodeCamp|freeCodeCamp|TypeScript|410538|2014-12-24T17:49:19Z|-10|true
+free-programming-books|EbookFoundation|HTML|351308|2013-10-11T06:50:37Z|-11|true
+awesome|sindresorhus|não encontrado|348998|2014-07-11T13:42:37Z|-10|true
+build-your-own-x|codecrafters-io|Markdown|342855|2018-05-09T12:03:18Z|-6|true
+public-apis|public-apis|Python|328613|2016-03-20T23:49:42Z|-8|true
+coding-interview-university|jwasham|não encontrado|312421|2016-06-06T02:34:12Z|-8|true
+developer-roadmap|kamranahmedse|TypeScript|309245|2017-03-15T13:45:52Z|-7|true
+system-design-primer|donnemartin|Python|290363|2017-02-26T16:15:28Z|-8|true
+996.ICU|996icu|não encontrado|270320|2019-03-26T07:31:14Z|-5|true
+awesome-python|vinta|Python|235434|2014-06-27T21:00:06Z|-10|true
+react|facebook|JavaScript|232683|2013-05-24T16:15:54Z|-11|true
+project-based-learning|practical-tutorials|não encontrado|219083|2017-04-12T05:07:46Z|-7|true
+awesome-selfhosted|awesome-selfhosted|não encontrado|218418|2015-06-01T02:33:17Z|-9|true
+vue|vuejs|TypeScript|208418|2013-07-29T03:24:51Z|-11|true
+Python|TheAlgorithms|Python|197699|2016-07-16T09:44:01Z|-8|true
+javascript-algorithms|trekhleb|JavaScript|190252|2018-03-24T07:47:04Z|-6|true
+linux|torvalds|C|188595|2011-09-04T22:48:12Z|-13|true
+tensorflow|tensorflow|C++|188285|2015-11-07T01:19:20Z|-9|true
+You-Dont-Know-JS|getify|não encontrado|181143|2013-11-16T02:37:24Z|-11|true
+CS-Notes|CyC2018|não encontrado|179086|2018-02-13T14:56:24Z|-7|true
+ohmyzsh|ohmyzsh|Shell|176372|2009-08-28T18:15:37Z|-15|true
+computer-science|ossu|não encontrado|175964|2014-05-04T00:18:39Z|-10|true
+AutoGPT|Significant-Gravitas|Python|172003|2023-03-16T09:21:07Z|-1|false
+bootstrap|twbs|JavaScript|171655|2011-07-29T21:19:00Z|-13|true
+flutter|flutter|Dart|168874|2015-03-06T22:54:58Z|-9|true
+vscode|microsoft|TypeScript|167867|2015-09-03T20:23:38Z|-9|true
+gitignore|github|não encontrado|164695|2010-11-08T20:17:14Z|-14|true
+Python-100-Days|jackfrued|Jupyter Notebook|161316|2018-03-01T16:05:52Z|-6|true
+the-book-of-secret-knowledge|trimstray|não encontrado|159289|2018-06-23T10:43:14Z|-6|true
+the-art-of-command-line|jlevy|não encontrado|154861|2015-05-20T15:11:03Z|-9|true

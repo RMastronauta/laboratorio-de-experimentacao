@@ -5,16 +5,15 @@ import { getTempoMedioAtualizacaoRepositories } from "./requisitos/requisito-4.j
 import { getRepositoriosPossuemLinguagemPopular } from "./requisitos/requisito-5.js";
 import { getPercentRepositoriesWithMoreThan30ClosedIssues } from "./requisitos/requisito-6.js";
 import { getRepositoriesQuantity } from "./service/git-service.js";
-import { createCsv } from "./utils/create-csv.util.js";
 
 const start = async () => {
-  const listRepositories = await getRepositoriesQuantity(1000);
-  await req1(listRepositories);
-  await req2(listRepositories);
-  await req3(listRepositories);
+  const listRepositories = await getRepositoriesQuantity(10);
+  // await req1(listRepositories);
+  // await req2(listRepositories);
+  // await req3(listRepositories);
   await req4(listRepositories);
-  await req5(listRepositories);
-  await req6(listRepositories);
+  // await req5(listRepositories);
+  // await req6(listRepositories);
 };
 
 const req1 = async (listRepositories) => {
