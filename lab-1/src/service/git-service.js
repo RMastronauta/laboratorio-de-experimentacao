@@ -6,7 +6,7 @@ dotenv.config();
 
 const GIT_GRAPHQL_URL = process.env.GIT_BASE_URL;
 const GIT_AUTH_TOKEN = process.env.GIT_AUTH_TOKEN;
-const QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 100;
+const QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 10;
 
 const getRepositories = async (skip) => {
   try {
@@ -16,33 +16,49 @@ const getRepositories = async (skip) => {
     };
 
     const queryGetRepositories = gql`
-      query ($perPage: Int!, $after: String) {
-        search(
-          query: "stars:>10000"
-          type: REPOSITORY
-          first: $perPage
-          after: $after
-        ) {
-          edges {
-            node {
-              ... on Repository {
+    query ($perPage: Int!, $after: String) {
+      search(
+        query: "stars:>10000"
+        type: REPOSITORY
+        first: $perPage
+        after: $after
+      ) {
+        edges {
+          node {
+            ... on Repository {
+              name
+              owner {
+                login
+              }
+              primaryLanguage {
                 name
-                owner {
-                  login
-                }
-                primaryLanguage {
-                  name
-                }
-                stargazerCount
-                createdAt
-                updatedAt
+              }
+              stargazerCount
+              createdAt
+              updatedAt
+              pullRequests {
+                totalCount
+              }
+              mergedPullRequests: pullRequests(states: MERGED) {
+                totalCount
+              }
+              issues {
+                totalCount
+              }
+              closedIssues: issues(states: [CLOSED]) {
+                totalCount
+              }
+              releases {
+                totalCount
               }
             }
-            cursor
           }
+          cursor
         }
       }
-    `;
+    }
+
+`;
 
     const { search } = await request({
       url: GIT_GRAPHQL_URL,
@@ -56,7 +72,7 @@ const getRepositories = async (skip) => {
 
     return {
       repositories: search.edges.map((edge) => edge.node),
-      cursor: search.edges.at(-1).cursor,
+      cursor: search.edges.length > 0 ? search.edges.at(-1).cursor : null,
     };
   } catch (error) {
     console.error("Erro ao buscar repositórios:", error);
@@ -90,6 +106,8 @@ const getRepositoriesQuantity = async (quantity) => {
 
     listRepositories.push(...addRepositories);
   }
+
+  console.log(listRepositories)
 
   progressBarStep(listRepositories.length, quantity);
   console.log(`Carregado todos repositorios | ${listRepositories.length}`);
