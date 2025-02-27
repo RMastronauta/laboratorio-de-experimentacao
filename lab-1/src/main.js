@@ -8,7 +8,7 @@ import { getRepositoriesQuantity } from "./service/git-service.js";
 import { createCsv } from "./utils/create-csv.util.js";
 
 const start = async () => {
-  const listRepositories = await getRepositoriesQuantity(100);
+  const listRepositories = await getRepositoriesQuantity(1000);
   await req1(listRepositories);
   await req2(listRepositories);
   await req3(listRepositories);
