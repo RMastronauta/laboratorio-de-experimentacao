@@ -7,13 +7,13 @@ import { getPercentRepositoriesWithMoreThan30ClosedIssues } from "./requisitos/r
 import { getRepositoriesQuantity } from "./service/git-service.js";
 
 const start = async () => {
-  const listRepositories = await getRepositoriesQuantity(50);
-  // await req1(listRepositories);
+  const listRepositories = await getRepositoriesQuantity(100);
+  await req1(listRepositories);
   await req2(listRepositories);
-  // await req3(listRepositories);
-  // await req4(listRepositories);
-  // await req5(listRepositories);
-  // await req6(listRepositories);
+  await req3(listRepositories);
+  await req4(listRepositories);
+  await req5(listRepositories);
+  await req6(listRepositories);
 };
 
 const req1 = async (listRepositories) => {
