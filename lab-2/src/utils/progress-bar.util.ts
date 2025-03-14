@@ -4,7 +4,7 @@ const progressBarStep = (loaded, total, barLength = 30) => {
   const percent = ((loaded / total) * 100).toFixed(0);
   const progress = Math.round((loaded / total) * barLength);
 
-  const bar = "█".repeat(progress) + "-".repeat(barLength - progress);
+  const bar = '█'.repeat(progress) + '-'.repeat(barLength - progress);
 
   process.stdout.write(`\r[${bar}] ${percent}%`);
 };
@@ -14,7 +14,6 @@ const progressBar = async (total = 20, delay = 100) => {
     progressBarStep(i, total);
     await sleep(delay);
   }
-  console.log("\n✅ Concluído!");
 };
 
 export { progressBar, progressBarStep };
