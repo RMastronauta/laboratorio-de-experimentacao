@@ -1,5 +1,3 @@
-import { gql, request } from 'graphql-request';
-
 import { progressBarStep } from '../utils/progress-bar.util';
 import { FindRepositoriesGitResponseDto } from './dto/git-response.dto';
 import 'dotenv/config';
@@ -10,6 +8,8 @@ export class GitService {
   private static QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 20;
 
   private async sendRequest(query: any, variables: any): Promise<any> {
+    const { request } = await import('graphql-request');
+
     return await request({
       url: GitService.GIT_GRAPHQL_URL,
       document: query,
@@ -24,6 +24,8 @@ export class GitService {
   private async findRepositoriesInGithub(
     skip: number,
   ): Promise<FindRepositoriesGitResponseDto> {
+    const { gql } = await import('graphql-request');
+
     const variables = {
       perPage: GitService.QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ,
       skip,
@@ -74,7 +76,6 @@ export class GitService {
     `;
 
     const { search: result } = await this.sendRequest(query, variables);
-    console.log(result);
 
     return {
       repositories: result.edges.map((edge: any) => edge.node),
