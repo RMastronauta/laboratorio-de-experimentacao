@@ -1,14 +1,11 @@
 import { GitService } from '../service/git.service';
 import { createCsv } from '../utils/create-csv.util';
 
-export async function saveRepositoriesToCsv() {
+export async function saveRepositoriesToCsv(listRepositories) {
   try {
-    const gitService = new GitService();
-    const quantity = 10;
-    const repositories = await gitService.getRepositories(quantity);
 
     // Formatação dos dados
-    const formattedData = repositories.map((repo: any) => ({
+    const formattedData = listRepositories.map((repo: any) => ({
       name: repo.name,
       owner: repo.owner.login,
       primaryLanguage: repo.primaryLanguage?.name || 'Unknown',

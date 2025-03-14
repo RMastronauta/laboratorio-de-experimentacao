@@ -5,7 +5,7 @@ const init = async () => {
   try {
     const gitService = new GitService();
     const repositories = await gitService.getRepositories(10);
-    await saveRepositoriesToCsv();
+    await saveRepositoriesToCsv(repositories);
   } catch (error) {
     console.error('Erro ao salvar os repositórios no CSV:', error);
   }
