@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "dotenv": "^16.4.7",
+    "fast-csv": "^5.0.2",
     "graphql-request": "^7.1.2",
     "lab-2": "file:"
   }

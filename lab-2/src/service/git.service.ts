@@ -2,6 +2,7 @@ import { gql, request } from 'graphql-request';
 
 import { progressBarStep } from '../utils/progress-bar.util';
 import { FindRepositoriesGitResponseDto } from './dto/git-response.dto';
+import 'dotenv/config';
 
 export class GitService {
   static GIT_GRAPHQL_URL = process.env.GIT_BASE_URL;
@@ -31,7 +32,7 @@ export class GitService {
     const query = gql`
       query ($perPage: Int!, $skip: String) {
         search(
-          query: "stars:>10000"
+          query: "stars:>10000 language:Java"
           type: REPOSITORY
           first: $perPage
           after: $skip
