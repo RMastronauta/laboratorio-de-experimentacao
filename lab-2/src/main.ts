@@ -1,13 +1,10 @@
 import { GitService } from './service/git.service';
-import { saveRepositoriesToCsv } from './requisitos/requisito-1';
 
 const init = async () => {
-  try {
-    const gitService = new GitService();
-    const repositories = await gitService.getRepositories(10);
-    await saveRepositoriesToCsv(repositories);
-  } catch (error) {
-    console.error('Erro ao salvar os repositórios no CSV:', error);
-  }
+  const gitService = new GitService();
+  const repositories = await gitService.getRepositories(10);
+  gitService.cloneRepository(repositories[0].url, repositories[0].name);
+  console.log(repositories[0]);
 };
+
 init();

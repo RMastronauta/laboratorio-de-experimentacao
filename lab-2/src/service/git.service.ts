@@ -1,11 +1,18 @@
-import { progressBarStep } from '../utils/progress-bar.util';
-import { FindRepositoriesGitResponseDto } from './dto/git-response.dto';
 import 'dotenv/config';
+import fs from 'fs-extra';
+import path from 'path';
+import simpleGit from 'simple-git';
 
+import { progressBarStep } from '../utils/progress-bar.util';
+import {
+  FindRepositoriesGitResponseDto,
+  RepositoryGitResponseDto,
+} from './dto/git-response.dto';
 export class GitService {
   static GIT_GRAPHQL_URL = process.env.GIT_BASE_URL;
   static GIT_AUTH_TOKEN = process.env.GIT_AUTH_TOKEN;
   private static QUANTITY_PERMITED_SEARCH_REPOSITORIES_BY_REQ = 20;
+  private static CLONE_DIR = path.join(__dirname, '../../clone_repositories');
 
   private async sendRequest(query: any, variables: any): Promise<any> {
     const { request } = await import('graphql-request');
@@ -67,6 +74,7 @@ export class GitService {
                 releases {
                   totalCount
                 }
+                url
               }
             }
             cursor
@@ -83,8 +91,8 @@ export class GitService {
     };
   }
 
-  async getRepositories(quantity: number) {
-    const listRepositories = [];
+  async getRepositories(quantity: number): Promise<RepositoryGitResponseDto[]> {
+    const listRepositories: RepositoryGitResponseDto[] = [];
     let cursorAux = null;
     console.log(`Carregando repositorios | ${quantity}`);
 
@@ -111,5 +119,27 @@ export class GitService {
     console.log(`\nCarregado todos repositorios | ${listRepositories.length}`);
 
     return listRepositories;
+  }
+
+  async cloneRepository(url: string, name: string): Promise<string> {
+    fs.ensureDirSync(GitService.CLONE_DIR);
+
+    const repoPath = path.join(GitService.CLONE_DIR, name);
+
+    if (fs.existsSync(repoPath)) {
+      return repoPath;
+    }
+
+    try {
+      const { clone } = simpleGit();
+
+      await clone(url, repoPath);
+
+      return repoPath;
+    } catch (e) {
+      console.error(`Error cloning repository: ${e.message}`);
+
+      throw null;
+    }
   }
 }

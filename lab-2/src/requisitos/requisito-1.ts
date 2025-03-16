@@ -1,26 +1,9 @@
-import { GitService } from '../service/git.service';
-import { createCsv } from '../utils/create-csv.util';
+import { RepositoryGitResponseDto } from 'src/service/dto/git-response.dto';
 
-export async function saveRepositoriesToCsv(listRepositories) {
-  try {
+export class Requisito1 {
+  private repositories: RepositoryGitResponseDto[];
 
-    // Formatação dos dados
-    const formattedData = listRepositories.map((repo: any) => ({
-      name: repo.name,
-      owner: repo.owner.login,
-      primaryLanguage: repo.primaryLanguage?.name || 'Unknown',
-      stargazerCount: repo.stargazerCount,
-      createdAt: repo.createdAt,
-      updatedAt: repo.updatedAt,
-      pullRequests: repo.pullRequests.totalCount,
-      mergedPullRequests: repo.mergedPullRequests?.totalCount || 0,
-      issues: repo.issues.totalCount,
-      closedIssues: repo.closedIssues?.totalCount || 0,
-      releases: repo.releases.totalCount,
-    }));
-    const filePath = "./csv/requisito-1.csv";
-    createCsv(formattedData, filePath);
-  } catch (error) {
-    console.error('Erro ao salvar os repositórios no CSV:', error);
+  constructor(repositories: RepositoryGitResponseDto[]) {
+    this.repositories = repositories;
   }
 }
