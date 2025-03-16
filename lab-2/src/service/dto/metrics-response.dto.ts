@@ -1,0 +1,60 @@
+export class CKResponseDto {
+  file: string;
+  class: string;
+  type: string;
+  cbo: number;
+  cboModified: number;
+  fanin: number;
+  fanout: number;
+  wmc: number;
+  dit: number;
+  noc: number;
+  rfc: number;
+  lcom: number;
+  lcomStar: number;
+  tcc: number;
+  lcc: number;
+  totalMethodsQty: number;
+  staticMethodsQty: number;
+  publicMethodsQty: number;
+  privateMethodsQty: number;
+  protectedMethodsQty: number;
+  defaultMethodsQty: number;
+  visibleMethodsQty: number;
+  abstractMethodsQty: number;
+  finalMethodsQty: number;
+  synchronizedMethodsQty: number;
+  totalFieldsQty: number;
+  staticFieldsQty: number;
+  publicFieldsQty: number;
+  privateFieldsQty: number;
+  protectedFieldsQty: number;
+  defaultFieldsQty: number;
+  finalFieldsQty: number;
+  synchronizedFieldsQty: number;
+  nosi: number;
+  loc: number;
+  returnQty: number;
+  loopQty: number;
+  comparisonsQty: number;
+  tryCatchQty: number;
+  parenthesizedExpsQty: number;
+  stringLiteralsQty: number;
+  numbersQty: number;
+  assignmentsQty: number;
+  mathOperationsQty: number;
+  variablesQty: number;
+  maxNestedBlocksQty: number;
+  anonymousClassesQty: number;
+  innerClassesQty: number;
+  lambdasQty: number;
+  uniqueWordsQty: number;
+  modifiers: string;
+  logStatementsQty: number;
+}
+
+export class MetricsCkResponseDto {
+  cbo: number;
+  dit: number;
+  lcom: number;
+}

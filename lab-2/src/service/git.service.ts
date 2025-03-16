@@ -131,9 +131,7 @@ export class GitService {
     }
 
     try {
-      const { clone } = simpleGit();
-
-      await clone(url, repoPath);
+      await simpleGit().clone(url, repoPath);
 
       return repoPath;
     } catch (e) {
