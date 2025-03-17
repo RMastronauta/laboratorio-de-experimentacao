@@ -19,8 +19,8 @@ export const metricsCkMapper = (
   );
 
   return {
-    cbo: Number((metrics.cbo / totalClasses).toFixed(2)),
-    dit: Number((metrics.dit / totalClasses).toFixed(2)),
-    lcom: Number((metrics.lcom / totalClasses).toFixed(2)),
+    cbo: Number((metrics.cbo / totalClasses).toFixed(2)) || 0,
+    dit: Number((metrics.dit / totalClasses).toFixed(2)) || 0,
+    lcom: Number((metrics.lcom / totalClasses).toFixed(2)) || 0,
   };
 };

@@ -12,24 +12,33 @@ import { metricsCkMapper } from './mappers/metrics/metric.mapper';
 
 export class MetricsService {
   async CK(projectDir, outputName): Promise<MetricsCkResponseDto> {
-    const execAsync = promisify(exec);
-    const ckJarPath = path.resolve(
-      __dirname,
-      '../../java/ck-0.7.0-jar-with-dependencies.jar',
-    );
-    const outputDir = `./ck_output/${outputName}/`;
-    const command = `java -jar ${ckJarPath} ${projectDir} true 0 false ${outputDir}`;
+    try {
+      const execAsync = promisify(exec);
+      const ckJarPath = path.resolve(
+        __dirname,
+        '../../java/ck-0.7.0-jar-with-dependencies.jar',
+      );
+      const outputDir = `./resultados/ck_results/${outputName}/`;
+      const command = `java -jar ${ckJarPath} ${projectDir} true 0 false ${outputDir}`;
 
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+
+      await execAsync(command);
+
+      const resultMetricsClassCsv = await parseCsvToJson<CKResponseDto>(
+        `${outputDir}/class.csv`,
+      );
+
+      return metricsCkMapper(resultMetricsClassCsv);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      return {
+        cbo: null,
+        dit: null,
+        lcom: null,
+      };
     }
-
-    await execAsync(command);
-
-    const resultMetricsClassCsv = await parseCsvToJson<CKResponseDto>(
-      `${outputDir}/class.csv`,
-    );
-
-    return metricsCkMapper(resultMetricsClassCsv);
   }
 }

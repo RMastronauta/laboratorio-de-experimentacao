@@ -6,7 +6,7 @@ const progressBarStep = (loaded, total, barLength = 30) => {
 
   const bar = '█'.repeat(progress) + '-'.repeat(barLength - progress);
 
-  process.stdout.write(`\r[${bar}] ${percent}%`);
+  process.stdout.write(`\r[${bar}] ${percent}% | ${loaded}/${total}`);
 };
 
 const progressBar = async (total = 20, delay = 100) => {

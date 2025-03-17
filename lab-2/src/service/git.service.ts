@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import simpleGit from 'simple-git';
 
+import { RepositoryEntity } from '../entities/repository.entity';
 import { progressBarStep } from '../utils/progress-bar.util';
 import {
   FindRepositoriesGitResponseDto,
@@ -91,10 +92,10 @@ export class GitService {
     };
   }
 
-  async getRepositories(quantity: number): Promise<RepositoryGitResponseDto[]> {
+  async getRepositories(quantity: number): Promise<RepositoryEntity[]> {
     const listRepositories: RepositoryGitResponseDto[] = [];
     let cursorAux = null;
-    console.log(`Carregando repositorios | ${quantity}`);
+    console.log(`Carregando repositorios`);
 
     while (listRepositories.length < quantity) {
       progressBarStep(listRepositories.length, quantity);
@@ -116,9 +117,36 @@ export class GitService {
 
     progressBarStep(listRepositories.length, quantity);
 
-    console.log(`\nCarregado todos repositorios | ${listRepositories.length}`);
+    return this.createEntites(listRepositories);
+  }
 
-    return listRepositories;
+  private async createEntites(
+    listRepositories: RepositoryGitResponseDto[],
+  ): Promise<RepositoryEntity[]> {
+    let entitiesCountCreate = 0;
+
+    console.log(`\nCarregando entidades`);
+    progressBarStep(entitiesCountCreate++, listRepositories.length);
+
+    const promiseEntities = listRepositories.map(async (repository) => {
+      const entity = await RepositoryEntity.create({
+        name: repository.name,
+        owner: repository.owner.login,
+        primaryLanguage: repository.primaryLanguage.name,
+        stargazerCount: repository.stargazerCount,
+        createdAt: repository.createdAt,
+        updatedAt: repository.updatedAt,
+        url: repository.url,
+      });
+
+      progressBarStep(entitiesCountCreate++, listRepositories.length);
+
+      return entity;
+    });
+
+    const entities = await Promise.all(promiseEntities);
+
+    return entities;
   }
 
   async cloneRepository(url: string, name: string): Promise<string> {

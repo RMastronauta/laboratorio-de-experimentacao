@@ -54,7 +54,7 @@ export class CKResponseDto {
 }
 
 export class MetricsCkResponseDto {
-  cbo: number;
-  dit: number;
-  lcom: number;
+  cbo: number | null;
+  dit: number | null;
+  lcom: number | null;
 }
