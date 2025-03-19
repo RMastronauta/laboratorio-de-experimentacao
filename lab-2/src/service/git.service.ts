@@ -137,6 +137,7 @@ export class GitService {
         createdAt: repository.createdAt,
         updatedAt: repository.updatedAt,
         url: repository.url,
+        compositeScore: repository.compositeScore
       });
 
       progressBarStep(entitiesCountCreate++, listRepositories.length);
@@ -146,7 +147,7 @@ export class GitService {
 
     const entities = await Promise.all(promiseEntities);
 
-    return entities;
+    return entities.filter((entity) => entity !== null);
   }
 
   async cloneRepository(url: string, name: string): Promise<string> {
@@ -162,10 +163,11 @@ export class GitService {
       await simpleGit().clone(url, repoPath);
 
       return repoPath;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      console.error(`Error cloning repository: ${e.message}`);
+      // console.error(`Error cloning repository: ${e.message}`);
 
-      throw null;
+      return null;
     }
   }
 }

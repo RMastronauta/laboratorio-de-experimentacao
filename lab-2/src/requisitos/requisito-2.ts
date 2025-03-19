@@ -3,61 +3,108 @@ import { createChart } from '../utils/create-chart.util';
 import { createCsv } from '../utils/create-csv.util';
 import { Requisito2ResponseDto } from './dto/requisitos-response.dto';
 import { requisito2Mapper } from './mapper/requisitos.mapper';
+import { calculateAgeYears } from '../utils/calculate_age_years.util'
+import { CalculoMaximas } from '../service/calculoMaxMetrica.service';
+import { responseMaxDTO } from 'src/service/dto/responseMax.dto';
 
 export class Requisito2 {
+  private readonly question = `RQ 02. Qual a relação entre a maturidade dos repositórios e as suas características de qualidade?`;
+  private results: Requisito2ResponseDto[] | null = null;
+  private repositories: RepositoryEntity[];
+  private oldRepository: number
   constructor(repositories: RepositoryEntity[]) {
     this.repositories = repositories;
   }
-  private readonly question = `RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade?`;
-  private results: Requisito2ResponseDto[] | null = null;
-  private repositories: RepositoryEntity[];
+
+  private calculateMaturityScore(repository: RepositoryEntity, maximos : responseMaxDTO): number {
+    const { maturity, metricsCk } = repository;
+    const { cbo, dit, lcom } = metricsCk;
+
+    const W_maturity = 0.4;
+    const W_cbo = 0.2;
+    const W_dit = 0.2;
+    const W_lcom = 0.2;
+
+    const normalizedCbo = cbo !== null ? cbo / maximos.maxCbo : 0;
+    const normalizedDit = dit !== null ? dit / maximos.maxDit : 0;
+    const normalizedLcom = lcom !== null ? 1 - lcom / maximos.maxLcom : 1;
+
+    return (
+      W_maturity * maturity +
+      W_cbo * normalizedCbo +
+      W_dit * normalizedDit +
+      W_lcom * normalizedLcom
+    );
+  }
+
+  async execute(): Promise<Requisito2ResponseDto[]> {
+    const maximos =  CalculoMaximas.calcular(this.repositories)
+    const result = this.repositories.map((repo) => {
+      const mapped = requisito2Mapper(repo);
+      mapped.compositeScore = this.calculateMaturityScore(repo, maximos); 
+      return mapped;
+    });
+
+    this.results = result;
+
+    await this.saveCsv();
+    return this.results;
+  }
+  
 
   async saveCsv(): Promise<void> {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
-
     createCsv(this.results, './resultados/csv/requisito-2.csv');
   }
 
-  async saveChart() {
-    if (!this.verifyResults) {
+  async saveChart(): Promise<void> {
+    if (!this.verifyResults()) {
       return;
     }
 
+
+    
+
     const config = {
-      type: 'bar',
+      type: 'scatter',
       data: {
-        // labels: Object.keys(countByYear),
-        // datasets: [
-        //   {
-        //     label: 'Repositorios',
-        //     data: Object.values(countByYear),
-        //   },
-        // ],
+        datasets: [
+          {
+            label: 'Maturidade vs. Qualidade',
+            data: this.results.map((r) => ({
+              x: r.compositeScore,
+              y: calculateAgeYears(r.createdAt),
+            })),
+            backgroundColor: 'green',
+          },
+        ],
       },
       options: {
         title: {
           display: true,
           text: this.question,
         },
-        plugins: {
-          datalabels: {
-            align: 'center',
-            formatter: (value) => value,
-            color: 'white',
-            font: {
-              weight: 'bold',
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Maturidade (anos)',
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Pontuação Composta de Qualidade',
             },
           },
         },
       },
     };
 
-    await createChart(
-      config,
-      `requisito-2-quantidade-repositorios-${this.results.length}`,
-    );
+
+    await createChart(config, `requisito-2-maturidade-vs-qualidade`);
   }
 
   verifyResults(): boolean {
@@ -74,25 +121,17 @@ export class Requisito2 {
   }
 
   toStringResult(): void {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
     console.log('==============================================');
     console.log(this.question);
     console.log(
-      `Resultado: ${this.results.reduce((acc, curr) => acc + curr.popularity, 0) / this.results.length}`,
+      `Resultado médio da pontuação composta: ${
+        this.results.reduce((acc, curr) => acc + curr.compositeScore, 0) / this.results.length
+      }`,
     );
     console.log('==============================================');
-  }
-
-  async execute(): Promise<Requisito2ResponseDto[]> {
-    const result = this.repositories.map(requisito2Mapper);
-
-    this.results = result;
-
-    await this.saveCsv();
-
-    return this.results;
   }
 }

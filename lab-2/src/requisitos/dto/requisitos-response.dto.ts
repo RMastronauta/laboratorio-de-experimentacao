@@ -7,6 +7,8 @@ class RequisitosBaseResponseDto extends MetricsCkResponseDto {
   createdAt: Date;
   updatedAt: Date;
   url: string;
+  compositeScore: number;
+
 }
 
 export class Requisito1ResponseDto extends RequisitosBaseResponseDto {

@@ -1,54 +1,105 @@
+import { CalculoMaximas } from '../service/calculoMaxMetrica.service';
 import { RepositoryEntity } from '../entities/repository.entity';
 import { createChart } from '../utils/create-chart.util';
 import { createCsv } from '../utils/create-csv.util';
 import { Requisito4ResponseDto } from './dto/requisitos-response.dto';
 import { requisito4Mapper } from './mapper/requisitos.mapper';
+import { responseMaxDTO } from 'src/service/dto/responseMax.dto';
 
 export class Requisito4 {
   constructor(repositories: RepositoryEntity[]) {
     this.repositories = repositories;
   }
+
   private readonly question = `RQ 04. Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?`;
   private results: Requisito4ResponseDto[] | null = null;
   private repositories: RepositoryEntity[];
 
+  private calculateQualityScore(repository: RepositoryEntity, maximos : responseMaxDTO): number {
+        const { tamanhoScore, metricsCk } = repository;
+        const { cbo, dit, lcom } = metricsCk;
+    
+        const W_tamanho = 0.4;
+        const W_cbo = 0.2;
+        const W_dit = 0.2;
+        const W_lcom = 0.2;
+    
+        const normalizedCbo = cbo !== null ? cbo / maximos.maxCbo : 0;
+        const normalizedDit = dit !== null ? dit / maximos.maxDit : 0;
+        const normalizedLcom = lcom !== null ? 1 - lcom / maximos.maxLcom : 1;
+    
+        return (
+          W_tamanho * tamanhoScore +
+          W_cbo * normalizedCbo +
+          W_dit * normalizedDit +
+          W_lcom * normalizedLcom
+        );
+      }
+
+  async execute(): Promise<Requisito4ResponseDto[]> {
+    const maximos =  CalculoMaximas.calcular(this.repositories)
+    const result = this.repositories.map((repo) => {
+      const mapped = requisito4Mapper(repo);
+      mapped.compositeScore = this.calculateQualityScore(repo, maximos);
+      return mapped;
+    });
+
+    this.results = result;
+
+    await this.saveCsv();
+    await this.saveChart();
+
+    return this.results;
+  }
+
   async saveCsv(): Promise<void> {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
-    createCsv(this.results, './resultados/csv/requisito-2.csv');
+    createCsv(this.results, './resultados/csv/requisito-4.csv');
   }
 
   async saveChart() {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
     const config = {
       type: 'bar',
       data: {
-        // labels: Object.keys(countByYear),
-        // datasets: [
-        //   {
-        //     label: 'Repositorios',
-        //     data: Object.values(countByYear),
-        //   },
-        // ],
+        labels: this.results.map((r) => r.name),
+        datasets: [
+          {
+            label: 'Pontuação de Qualidade',
+            data: this.results.map((r) => r.compositeScore),
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          },
+        ],
       },
       options: {
-        title: {
-          display: true,
-          text: this.question,
-        },
+        responsive: true,
         plugins: {
-          datalabels: {
-            align: 'center',
-            formatter: (value) => value,
-            color: 'white',
-            font: {
-              weight: 'bold',
+          legend: {
+            display: true,
+            position: 'top',
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Repositórios',
             },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Pontuação de Qualidade',
+            },
+            beginAtZero: true,
           },
         },
       },
@@ -56,7 +107,7 @@ export class Requisito4 {
 
     await createChart(
       config,
-      `requisito-3-quantidade-repositorios-${this.results.length}`,
+      `requisito-4-tamanho-vs-qualidade-${this.results.length}`,
     );
   }
 
@@ -74,25 +125,17 @@ export class Requisito4 {
   }
 
   toStringResult(): void {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
     console.log('==============================================');
     console.log(this.question);
     console.log(
-      `Resultado: ${this.results.reduce((acc, curr) => acc + curr.popularity, 0) / this.results.length}`,
+      `Pontuação média de qualidade: ${
+        this.results.reduce((acc, curr) => acc + curr.compositeScore, 0) / this.results.length
+      }`,
     );
     console.log('==============================================');
-  }
-
-  async execute(): Promise<Requisito4ResponseDto[]> {
-    const result = this.repositories.map(requisito4Mapper);
-
-    this.results = result;
-
-    await this.saveCsv();
-
-    return this.results;
   }
 }

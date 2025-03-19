@@ -13,6 +13,7 @@ interface IProps {
   updatedAt: Date;
   url: string;
   metricsCk: MetricsCkResponseDto;
+  compositeScore: number;
 }
 
 export class RepositoryEntity {
@@ -25,6 +26,9 @@ export class RepositoryEntity {
     this.updatedAt = props.updatedAt;
     this.url = props.url;
     this.metricsCk = props.metricsCk;
+    this.compositeScore = props.compositeScore;
+    this.maturity = this.calculateMaturity();
+
   }
 
   name: string;
@@ -35,6 +39,16 @@ export class RepositoryEntity {
   updatedAt: Date;
   url: string;
   metricsCk: MetricsCkResponseDto;
+  compositeScore: number;
+  maturity: number;
+
+  private calculateMaturity(): number {
+    const currentDate = new Date();
+    const createdAtDate = new Date(this.createdAt);
+    const timeDiff = currentDate.getTime() - createdAtDate.getTime();
+    const years = timeDiff / (1000 * 3600 * 24 * 365);
+    return years;
+  }
 
   static async create(
     repository: Optional<IProps, 'metricsCk'>,

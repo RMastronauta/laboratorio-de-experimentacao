@@ -1,54 +1,105 @@
+import { CalculoMaximas } from '../service/calculoMaxMetrica.service';
 import { RepositoryEntity } from '../entities/repository.entity';
 import { createChart } from '../utils/create-chart.util';
 import { createCsv } from '../utils/create-csv.util';
 import { Requisito3ResponseDto } from './dto/requisitos-response.dto';
 import { requisito3Mapper } from './mapper/requisitos.mapper';
+import { responseMaxDTO } from 'src/service/dto/responseMax.dto';
 
 export class Requisito3 {
   constructor(repositories: RepositoryEntity[]) {
     this.repositories = repositories;
   }
+
   private readonly question = `RQ 03. Qual a relação entre a atividade dos repositórios e as suas características de qualidade?`;
   private results: Requisito3ResponseDto[] | null = null;
   private repositories: RepositoryEntity[];
 
+  private calculateActivityScore(repository: RepositoryEntity, maximos : responseMaxDTO): number {
+      const { activityScore, metricsCk } = repository;
+      const { cbo, dit, lcom } = metricsCk;
+  
+      
+      const W_maturity = 0.4;
+      const W_cbo = 0.2;
+      const W_dit = 0.2;
+      const W_lcom = 0.2;
+  
+      const normalizedCbo = cbo !== null ? cbo / maximos.maxCbo : 0;
+      const normalizedDit = dit !== null ? dit / maximos.maxDit : 0;
+      const normalizedLcom = lcom !== null ? 1 - lcom / maximos.maxLcom : 1;
+  
+      return (
+        W_maturity * activityScore +
+        W_cbo * normalizedCbo +
+        W_dit * normalizedDit +
+        W_lcom * normalizedLcom
+      );
+    }
+
+  async execute(): Promise<Requisito3ResponseDto[]> {
+    const maximos =  CalculoMaximas.calcular(this.repositories)
+    const result = this.repositories.map((repo) => {
+      const mapped = requisito3Mapper(repo);
+      mapped.compositeScore = this.calculateActivityScore(repo, maximos);
+      return mapped;
+    });
+
+    this.results = result;
+
+    await this.saveCsv();
+    await this.saveChart();
+
+    return this.results;
+  }
+
   async saveCsv(): Promise<void> {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
-    createCsv(this.results, './resultados/csv/requisito-2.csv');
+    createCsv(this.results, './resultados/csv/requisito-3.csv');
   }
 
   async saveChart() {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
     const config = {
-      type: 'bar',
+      type: 'scatter',
       data: {
-        // labels: Object.keys(countByYear),
-        // datasets: [
-        //   {
-        //     label: 'Repositorios',
-        //     data: Object.values(countByYear),
-        //   },
-        // ],
+        datasets: [
+          {
+            label: 'Pontuação de Atividade',
+            data: this.results.map((r) => ({
+              x: r.compositeScore,
+              y: "",
+            })),
+          },
+        ],
       },
       options: {
-        title: {
-          display: true,
-          text: this.question,
-        },
+        responsive: true,
         plugins: {
-          datalabels: {
-            align: 'center',
-            formatter: (value) => value,
-            color: 'white',
-            font: {
-              weight: 'bold',
+          legend: {
+            display: true,
+            position: 'top',
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Repositórios',
             },
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Pontuação de Atividade',
+            },
+            beginAtZero: true,
           },
         },
       },
@@ -56,7 +107,7 @@ export class Requisito3 {
 
     await createChart(
       config,
-      `requisito-3-quantidade-repositorios-${this.results.length}`,
+      `requisito-3-atividade-vs-qualidade-${this.results.length}`,
     );
   }
 
@@ -74,26 +125,17 @@ export class Requisito3 {
   }
 
   toStringResult(): void {
-    if (!this.verifyResults) {
+    if (!this.verifyResults()) {
       return;
     }
 
     console.log('==============================================');
-
     console.log(this.question);
     console.log(
-      `Resultado: ${this.results.reduce((acc, curr) => acc + curr.popularity, 0) / this.results.length}`,
+      `Pontuação média de atividade: ${
+        this.results.reduce((acc, curr) => acc + curr.compositeScore, 0) / this.results.length
+      }`,
     );
     console.log('==============================================');
-  }
-
-  async execute(): Promise<Requisito3ResponseDto[]> {
-    const result = this.repositories.map(requisito3Mapper);
-
-    this.results = result;
-
-    await this.saveCsv();
-
-    return this.results;
   }
 }
