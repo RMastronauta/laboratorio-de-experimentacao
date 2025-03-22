@@ -14,6 +14,8 @@ interface IProps {
   url: string;
   metricsCk: MetricsCkResponseDto;
   compositeScore: number;
+  allRelease: number;
+  tamanhoScore: number;
 }
 
 export class RepositoryEntity {
@@ -28,7 +30,8 @@ export class RepositoryEntity {
     this.metricsCk = props.metricsCk;
     this.compositeScore = props.compositeScore;
     this.maturity = this.calculateMaturity();
-
+    this.allRelease = props.allRelease;
+    this.tamanhoScore = props.tamanhoScore;
   }
 
   name: string;
@@ -41,6 +44,8 @@ export class RepositoryEntity {
   metricsCk: MetricsCkResponseDto;
   compositeScore: number;
   maturity: number;
+  allRelease: number;
+  tamanhoScore: number;
 
   private calculateMaturity(): number {
     const currentDate = new Date();

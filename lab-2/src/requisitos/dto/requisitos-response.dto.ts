@@ -8,6 +8,7 @@ class RequisitosBaseResponseDto extends MetricsCkResponseDto {
   updatedAt: Date;
   url: string;
   compositeScore: number;
+  allRelease: number;
 
 }
 
