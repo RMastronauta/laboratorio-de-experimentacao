@@ -34,10 +34,12 @@ export class MetricsService {
       return metricsCkMapper(resultMetricsClassCsv);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
+      console.log("Error: ", e);
       return {
         cbo: null,
         dit: null,
         lcom: null,
+        loc: null,
       };
     }
   }

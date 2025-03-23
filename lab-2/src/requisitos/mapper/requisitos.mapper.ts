@@ -14,6 +14,7 @@ export const requisito1Mapper = (
   cbo: repository.metricsCk.cbo,
   dit: repository.metricsCk.dit,
   lcom: repository.metricsCk.lcom,
+  loc: repository.metricsCk.loc,
   compositeScore : repository.compositeScore,
   allRelease: repository.allRelease
 });
@@ -31,6 +32,7 @@ export const requisito2Mapper = (
   cbo: repository.metricsCk.cbo,
   dit: repository.metricsCk.dit,
   lcom: repository.metricsCk.lcom,
+  loc: repository.metricsCk.loc,
   compositeScore : repository.compositeScore,
   allRelease: repository.allRelease
 });
@@ -48,6 +50,7 @@ export const requisito3Mapper = (
   cbo: repository.metricsCk.cbo,
   dit: repository.metricsCk.dit,
   lcom: repository.metricsCk.lcom,
+  loc: repository.metricsCk.loc,
   compositeScore : repository.compositeScore,
   allRelease: repository.allRelease
 });
@@ -65,6 +68,7 @@ export const requisito4Mapper = (
   cbo: repository.metricsCk.cbo,
   dit: repository.metricsCk.dit,
   lcom: repository.metricsCk.lcom,
+  loc: repository.metricsCk.loc,
   compositeScore : repository.compositeScore,
   allRelease: repository.allRelease
 });
